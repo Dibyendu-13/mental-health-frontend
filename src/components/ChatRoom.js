@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Box, Typography, TextField, Button, Paper, Divider } from '@mui/material';
 import { format, isToday, isYesterday } from 'date-fns';
@@ -43,14 +43,8 @@ const ChatRoom = () => {
     };
   }, [chatRoomId]);
 
-  // Fetch existing messages
-  useEffect(() => {
-    if (chatRoomId) {
-      fetchMessages(chatRoomId);
-    }
-  }, [chatRoomId]);
-
-  const fetchMessages = async (roomId) => {
+  // Define fetchMessages inside useCallback to prevent it from being redefined on each render
+  const fetchMessages = useCallback(async (roomId) => {
     try {
       const response = await fetch(`http://localhost:5001/api/chat-messages/${roomId}/messages`, {
         headers: {
@@ -67,7 +61,13 @@ const ChatRoom = () => {
     } catch (error) {
       console.error('Error fetching messages:', error.message);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    if (chatRoomId) {
+      fetchMessages(chatRoomId);
+    }
+  }, [chatRoomId, fetchMessages]);  // No longer causes the warning
 
   const sendMessage = () => {
     if (!roomClosed && newMessage.trim()) {

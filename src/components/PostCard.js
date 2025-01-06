@@ -99,7 +99,7 @@ const PostCard = ({ post }) => {
   const handleChatRequest = async (commenterId) => {
     setLoading(true);
     try {
-      const response = await axios.post(
+      await axios.post(
         `http://localhost:5001/api/chat-requests/request`,
         { commenterId, postId: post._id },
         {
