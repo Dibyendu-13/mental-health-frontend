@@ -13,7 +13,7 @@ import {
   Card,
   CardContent,
   CardActions,
-  Badge,
+  
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
@@ -59,7 +59,7 @@ const Notifications = () => {
   const handleAccept = async () => {
     setLoading(true);
     try {
-      const { data } = await axios.post(
+      await axios.post(
         'http://localhost:5001/api/chat-requests/respond',
         { requestId: currentRequest._id, action: 'accept' },
         {
