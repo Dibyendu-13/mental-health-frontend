@@ -8,11 +8,21 @@ const Home = () => {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const { data } = await api.get('/posts');
-      setPosts(data);
+      try {
+        const { data } = await api.get('/posts');
+        console.log('Fetched data:', data); // Log the fetched data to check its structure
+        if (Array.isArray(data)) {
+          setPosts(data); // Only set if the response is an array
+        } else {
+          console.error('API did not return an array:', data);
+        }
+      } catch (error) {
+        console.error('Error fetching posts:', error);
+      }
     };
+
     fetchPosts();
-  }, []);
+  }, []); // Empty dependency array ensures this runs once when the component mounts
 
   return (
     <Container sx={{ marginTop: 4 }}>
@@ -28,9 +38,15 @@ const Home = () => {
         Explore Posts
       </Typography>
       <Box>
-        {posts.map((post) => (
-          <PostCard key={post._id} post={post} />
-        ))}
+        {posts.length > 0 ? (
+          posts.map((post) => (
+            <PostCard key={post._id} post={post} />
+          ))
+        ) : (
+          <Typography variant="body1" color="textSecondary" align="center">
+            No posts available.
+          </Typography>
+        )}
       </Box>
     </Container>
   );
