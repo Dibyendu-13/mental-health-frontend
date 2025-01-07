@@ -43,7 +43,7 @@ const DiscussionPage = () => {
       const messageData = {
         discussionId: discussionId,
         username: decodedToken.username,
-        senderId:  "45",
+        senderId:  currentUserId,
         content: message,
       };
 
