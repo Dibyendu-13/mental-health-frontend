@@ -17,15 +17,14 @@ import axios from 'axios';
 
 const PostCard = ({ post }) => {
   const [likes, setLikes] = useState(post.likes);
-  const [hasVoted, setHasVoted] = useState(false); // Tracks if the user has voted
+  const [hasVoted, setHasVoted] = useState(false); 
   const [comment, setComment] = useState('');
   const [comments, setComments] = useState(post.comments || []);
-  const [loading, setLoading] = useState(false); // For chat request loading
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Check if the user has already voted
         const voteResponse = await axios.get(
           `https://anony-backend.onrender.com/api/posts/${post._id}/vote-status`,
           {
@@ -36,7 +35,6 @@ const PostCard = ({ post }) => {
         );
         setHasVoted(voteResponse.data.hasVoted);
 
-        // Fetch comments
         const commentsResponse = await axios.get(
           `https://anony-backend.onrender.com/api/posts/${post._id}/comments`,
           {
@@ -54,7 +52,6 @@ const PostCard = ({ post }) => {
     fetchData();
   }, [post._id]);
 
-  // Handle voting action (upvote or downvote)
   const handleVote = async (action) => {
     try {
       const { data } = await axios.post(
@@ -66,15 +63,13 @@ const PostCard = ({ post }) => {
           },
         }
       );
-
-      setLikes(data.likes); // Update likes dynamically
-      setHasVoted(true); // Disable voting buttons
+      setLikes(data.likes);
+      setHasVoted(true); 
     } catch (err) {
       console.error('Failed to update vote:', err.response?.data?.error || err.message);
     }
   };
 
-  // Handle adding a comment
   const handleAddComment = async () => {
     if (comment.trim()) {
       try {
@@ -87,15 +82,14 @@ const PostCard = ({ post }) => {
             },
           }
         );
-        setComments((prev) => [...prev, data]); // Add the new comment to the state
-        setComment(''); // Clear the comment input
+        setComments((prev) => [...prev, data]);
+        setComment('');
       } catch (err) {
         console.error('Failed to add comment:', err.response?.data?.error || err.message);
       }
     }
   };
 
-  // Handle sending a chat request
   const handleChatRequest = async (commenterId) => {
     setLoading(true);
     try {
@@ -119,7 +113,6 @@ const PostCard = ({ post }) => {
 
   return (
     <Card sx={{ display: 'flex', marginBottom: 3, borderRadius: 4, boxShadow: 2, overflow: 'hidden' }}>
-      {/* Voting Section */}
       <Box
         sx={{
           display: 'flex',
@@ -134,7 +127,7 @@ const PostCard = ({ post }) => {
           onClick={() => handleVote('upvote')}
           color="primary"
           size="large"
-          disabled={hasVoted} // Disable button after voting
+          disabled={hasVoted}
         >
           <ArrowDropUp />
         </IconButton>
@@ -145,13 +138,12 @@ const PostCard = ({ post }) => {
           onClick={() => handleVote('downvote')}
           color="secondary"
           size="large"
-          disabled={hasVoted} // Disable button after voting
+          disabled={hasVoted}
         >
           <ArrowDropDown />
         </IconButton>
       </Box>
 
-      {/* Post Content Section */}
       <Box sx={{ flex: 1 }}>
         <CardContent>
           <Typography variant="h6" sx={{ fontWeight: 'bold', marginBottom: 1, color: '#6C63FF' }}>
@@ -168,14 +160,16 @@ const PostCard = ({ post }) => {
               <Chip key={index} label={`#${tag}`} size="small" sx={{ backgroundColor: '#6C63FF', color: '#FFFFFF' }} />
             ))}
           </Stack>
-          <Button component={Link} to={`/post/${post._id}`} variant="contained" color="primary" size="small">
-            View Full Discussion
+          
+
+          {/* New button to create a discussion */}
+          <Button component={Link} to={`/create-discussion/${post._id}`} variant="outlined" color="secondary" size="small" sx={{ marginTop: 1 }}>
+            Create Discussion
           </Button>
         </CardContent>
 
         <Divider />
 
-        {/* Comments Section */}
         <Box sx={{ padding: 2 }}>
           <Typography variant="body2" sx={{ marginBottom: 1, color: 'text.secondary' }}>
             Comments:
@@ -200,7 +194,7 @@ const PostCard = ({ post }) => {
                   size="small"
                   color="primary"
                   disabled={loading}
-                  onClick={() => handleChatRequest(comment.author?._id)} // Pass the author's ID
+                  onClick={() => handleChatRequest(comment.author?._id)}
                   sx={{ marginTop: 1 }}
                 >
                   Request Chat

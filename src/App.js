@@ -11,6 +11,8 @@ import AddPost from './pages/AddPost';
 import Notifications from './components/Notification';
 import ChatRequestList from './components/ChatRequestList'; // New: Chat Request List
 import ChatRoom from './components/ChatRoom'; // New: Chat Room
+import CreateDiscussionPage from './components/CreateDiscussionPage';
+import DiscussionPage from './components/DiscussionPage';
 
 // Function to check if the user is authenticated
 const isAuthenticated = () => !!localStorage.getItem('token');
@@ -38,7 +40,10 @@ const App = () => {
         <Route path="/notifications" element={<ProtectedRoute><Notifications /></ProtectedRoute>} />
         <Route path="/chat-requests" element={<ProtectedRoute><ChatRequestList /></ProtectedRoute>} />
         <Route path="/chat-room/:chatRoomId" element={<ProtectedRoute><ChatRoom /></ProtectedRoute>} />
-        
+        <Route path="/create-discussion/:postId" element={<ProtectedRoute><CreateDiscussionPage /></ProtectedRoute>} />
+        <Route path="/discussions/:discussionId" element={<ProtectedRoute><DiscussionPage /></ProtectedRoute>} />
+
+
         {/* Public routes for login and register */}
         <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
         <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
