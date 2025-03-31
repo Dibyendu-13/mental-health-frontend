@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Create an Axios instance with a base URL
 const api = axios.create({
-  baseURL: 'https://anony-backend.onrender.com/api', // Replace with your backend API URL
+  baseURL: 'https://anony-backend-1.onrender.com/api', 
   headers: {
     'Content-Type': 'application/json',
   },
