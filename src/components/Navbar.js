@@ -43,7 +43,7 @@ const Navbar = () => {
 
       const fetchNotifications = async () => {
         try {
-          const response = await axios.get('https://anony-backend.onrender.com/api/notifications', {
+          const response = await axios.get('https://anony-backend-1.onrender.com/api/notifications', {
             headers: { Authorization: `Bearer ${token}` },
           });
           if (response.status === 200) {
@@ -64,7 +64,7 @@ const Navbar = () => {
 
   const checkRoomAndNavigate = async () => {
     try {
-      const response = await axios.get('https://anony-backend.onrender.com/api/chat-requests/my-room', {
+      const response = await axios.get('https://anony-backend-1.onrender.com/api/chat-requests/my-room', {
         headers: { Authorization: `Bearer ${token}` },
       });
 

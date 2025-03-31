@@ -16,7 +16,7 @@ const CreateDiscussionPage = () => {
         setLoading(true);
         // Create a new discussion using the topic as the discussion title
         const response = await axios.post(
-          `https://anony-backend.onrender.com/api/discussions/${topic}`,  // Route with the topic as part of the URL
+          `https://anony-backend-1.onrender.com/api/discussions/${topic}`,  // Route with the topic as part of the URL
           {},  // No body required, as the topic itself is used as the title
           {
             headers: {

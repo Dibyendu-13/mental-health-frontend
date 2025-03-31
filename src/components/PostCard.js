@@ -26,7 +26,7 @@ const PostCard = ({ post }) => {
     const fetchData = async () => {
       try {
         const voteResponse = await axios.get(
-          `https://anony-backend.onrender.com/api/posts/${post._id}/vote-status`,
+          `https://anony-backend-1.onrender.com/api/posts/${post._id}/vote-status`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -36,7 +36,7 @@ const PostCard = ({ post }) => {
         setHasVoted(voteResponse.data.hasVoted);
 
         const commentsResponse = await axios.get(
-          `https://anony-backend.onrender.com/api/posts/${post._id}/comments`,
+          `https://anony-backend-1.onrender.com/api/posts/${post._id}/comments`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -55,7 +55,7 @@ const PostCard = ({ post }) => {
   const handleVote = async (action) => {
     try {
       const { data } = await axios.post(
-        `https://anony-backend.onrender.com/api/posts/${post._id}/likes`,
+        `https://anony-backend-1.onrender.com/api/posts/${post._id}/likes`,
         { action },
         {
           headers: {
@@ -74,7 +74,7 @@ const PostCard = ({ post }) => {
     if (comment.trim()) {
       try {
         const { data } = await axios.post(
-          `https://anony-backend.onrender.com/api/posts/${post._id}/comments`,
+          `https://anony-backend-1.onrender.com/api/posts/${post._id}/comments`,
           { content: comment },
           {
             headers: {
@@ -94,7 +94,7 @@ const PostCard = ({ post }) => {
     setLoading(true);
     try {
       await axios.post(
-        `https://anony-backend.onrender.com/api/chat-requests/request`,
+        `https://anony-backend-1.onrender.com/api/chat-requests/request`,
         { commenterId, postId: post._id },
         {
           headers: {
